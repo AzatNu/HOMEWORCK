@@ -24,17 +24,31 @@ export const LoginPage = () => {
             `Данные отправлены: Почта: ${email}, Пароль: ${password}, Повтор пароля: ${passwordRepeat}`
         );
     };
-    if (email && password && passwordRepeat) {
+    if (
+        email.length !== 0 &&
+        password.length !== 0 &&
+        passwordRepeat.length !== 0
+    ) {
         allFieldsAreFilledIn = true;
     }
     if (isVaildEmail && isVaildPassword && passwordsMatch) {
         allIsVaild = true;
     }
-    if (allIsVaild && allFieldsAreFilledIn) {
-        submitButtonRef.current.focus();
-        submitButtonRef.current.disabled = false;
+    if (
+        allIsVaild &&
+        allFieldsAreFilledIn &&
+        emailRegex.test(email) &&
+        password.length >= 5 &&
+        password === passwordRepeat
+    ) {
+        if (submitButtonRef.current) {
+            submitButtonRef.current.focus();
+            submitButtonRef.current.disabled = false;
+        }
     } else {
-        submitButtonRef.current.disabled = true;
+        if (submitButtonRef.current) {
+            submitButtonRef.current.disabled = true;
+        }
     }
 
     const handleEmailBlur = () => {
@@ -59,8 +73,7 @@ export const LoginPage = () => {
             setErrorPasswordMessage("");
         }
     };
-
-    const handlePasswordRepeatBlur = () => {
+    const handlePasswordsMatch = () => {
         if (password !== passwordRepeat) {
             setPasswordsMatch(false);
         } else {
@@ -82,10 +95,12 @@ export const LoginPage = () => {
             passwordsMatch={passwordsMatch}
             handleEmailBlur={handleEmailBlur}
             handlePasswordBlur={handlePasswordBlur}
-            handlePasswordRepeatBlur={handlePasswordRepeatBlur}
             errorEmailMessage={errorEmailMessage}
             errorPasswordMessage={errorPasswordMessage}
             submitButtonRef={submitButtonRef}
+            allIsVaild={allIsVaild}
+            allFieldsAreFilledIn={allFieldsAreFilledIn}
+            handlePasswordsMatch={handlePasswordsMatch}
         />
     );
 };

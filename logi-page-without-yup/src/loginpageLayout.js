@@ -14,9 +14,11 @@ export const LoginpageLayout = ({
     errorEmailMessage,
     errorPasswordMessage,
     handleEmailBlur,
-    handlePasswordBlur,
-    handlePasswordRepeatBlur,
     submitButtonRef,
+    handlePasswordBlur,
+    handlePasswordsMatch,
+    allFieldsAreFilledIn,
+    allIsVaild,
 }) => {
     return (
         <div className={styel["LoginPage"]}>
@@ -78,7 +80,7 @@ export const LoginpageLayout = ({
                         placeholder="Повторите пароль"
                         value={passwordRepeat}
                         onChange={(e) => setPasswordRepeat(e.target.value)}
-                        onBlur={handlePasswordRepeatBlur}
+                        onBlur={handlePasswordsMatch}
                     />
                     {!passwordsMatch && (
                         <p className={styel["error"]}>Пароли не совпадают</p>
@@ -94,11 +96,10 @@ export const LoginpageLayout = ({
                     </button>
                 </div>
             </form>
-
             <button
-                ref={submitButtonRef}
                 className={styel["submitButton"]}
                 onClick={sendData}
+                ref={submitButtonRef}
             >
                 Зарегистрироваться
             </button>
