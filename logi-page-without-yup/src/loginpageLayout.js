@@ -7,18 +7,17 @@ export const LoginpageLayout = ({
     setEmail,
     setPassword,
     setPasswordRepeat,
+    emailErrorMassage,
+    emailOnBlur,
+    passwordErrorMassage,
+    passwordOnBlur,
+    passwordRepeatErrorMassage,
     sendData,
-    isVaildEmail,
-    isVaildPassword,
-    passwordsMatch,
-    errorEmailMessage,
-    errorPasswordMessage,
-    handleEmailBlur,
     submitButtonRef,
-    handlePasswordBlur,
-    handlePasswordsMatch,
-    allFieldsAreFilledIn,
-    allIsVaild,
+    paswordRepeatRef,
+    deletEmail,
+    deletPassword,
+    deletPasswordRepeat,
 }) => {
     return (
         <div className={styel["LoginPage"]}>
@@ -33,22 +32,20 @@ export const LoginpageLayout = ({
                         name="Email"
                         placeholder="Почта"
                         value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        onBlur={handleEmailBlur}
+                        onBlur={emailOnBlur}
+                        onChange={(e) => {
+                            setEmail(e.target.value);
+                        }}
                     />
-                    {!isVaildEmail && (
-                        <p className={styel["error"]}>{errorEmailMessage}</p>
-                    )}
+                    <p className={styel[`error`]}>{emailErrorMassage}</p>
                     <button
                         className={styel["cleanButton"]}
-                        onClick={(e) => {
-                            e.preventDefault();
-                            setEmail("");
-                        }}
+                        onClick={deletEmail}
                     >
                         Очистить
                     </button>
                 </div>
+
                 <div className={styel["password-form"]}>
                     <label htmlFor="Password">Пароль</label>
                     <input
@@ -57,17 +54,12 @@ export const LoginpageLayout = ({
                         placeholder="Пароль"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        onBlur={handlePasswordBlur}
+                        onBlur={passwordOnBlur}
                     />
-                    {!isVaildPassword && (
-                        <p className={styel["error"]}>{errorPasswordMessage}</p>
-                    )}
+                    <p className={styel[`error`]}>{passwordErrorMassage}</p>
                     <button
                         className={styel["cleanButton"]}
-                        onClick={(e) => {
-                            e.preventDefault();
-                            setPassword("");
-                        }}
+                        onClick={deletPassword}
                     >
                         Очистить
                     </button>
@@ -75,34 +67,35 @@ export const LoginpageLayout = ({
                 <div className={styel["passwordRepeat-form"]}>
                     <label htmlFor="Password">Повторите пароль</label>
                     <input
+                        ref={paswordRepeatRef}
                         type="password"
                         name="Password"
                         placeholder="Повторите пароль"
                         value={passwordRepeat}
                         onChange={(e) => setPasswordRepeat(e.target.value)}
-                        onBlur={handlePasswordsMatch}
                     />
-                    {!passwordsMatch && (
-                        <p className={styel["error"]}>Пароли не совпадают</p>
-                    )}
+                    <p className={styel[`error`]}>
+                        {passwordRepeatErrorMassage}
+                    </p>
                     <button
                         className={styel["cleanButton"]}
-                        onClick={(e) => {
-                            e.preventDefault();
-                            setPasswordRepeat("");
-                        }}
+                        onClick={deletPasswordRepeat}
                     >
                         Очистить
                     </button>
                 </div>
             </form>
-            <button
-                className={styel["submitButton"]}
-                onClick={sendData}
-                ref={submitButtonRef}
-            >
-                Зарегистрироваться
-            </button>
+            {email.length !== 0 &&
+                password.length !== 0 &&
+                passwordRepeat.length !== 0 && (
+                    <button
+                        ref={submitButtonRef}
+                        className={styel["submitButton"]}
+                        onClick={sendData}
+                    >
+                        Зарегистрироваться
+                    </button>
+                )}
         </div>
     );
 };

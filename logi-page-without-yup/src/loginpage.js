@@ -2,83 +2,74 @@ import { LoginpageLayout } from "./loginpageLayout";
 import { useState, useRef } from "react";
 
 export const LoginPage = () => {
-    let allIsVaild = false;
-    let allFieldsAreFilledIn = false;
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [passwordRepeat, setPasswordRepeat] = useState("");
-    const [isVaildEmail, setIsVaildEmail] = useState(true);
-    const [isVaildPassword, setIsVaildPassword] = useState(true);
-    const [passwordsMatch, setPasswordsMatch] = useState(true);
-    const [errorEmailMessage, setErrorEmailMessage] = useState("");
-    const [errorPasswordMessage, setErrorPasswordMessage] = useState("");
+    const [emailErrorMassage, setEmailErrorMassage] = useState("");
+    const [passwordErrorMassage, setPasswordErrorMassage] = useState("");
     const submitButtonRef = useRef(null);
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
+    let passwordRepeatErrorMassage = "";
     const sendData = () => {
         setEmail("");
         setPassword("");
         setPasswordRepeat("");
         console.log(
-            `Данные отправлены: Почта: ${email}, Пароль: ${password}, Повтор пароля: ${passwordRepeat}`
+            `Данные отправлены: ${email}, ${password}, ${passwordRepeat}`
         );
     };
-    if (
-        email.length !== 0 &&
-        password.length !== 0 &&
-        passwordRepeat.length !== 0
-    ) {
-        allFieldsAreFilledIn = true;
-    }
-    if (isVaildEmail && isVaildPassword && passwordsMatch) {
-        allIsVaild = true;
-    }
-    if (
-        allIsVaild &&
-        allFieldsAreFilledIn &&
-        emailRegex.test(email) &&
-        password.length >= 5 &&
-        password === passwordRepeat
-    ) {
-        if (submitButtonRef.current) {
-            submitButtonRef.current.focus();
-            submitButtonRef.current.disabled = false;
-        }
-    } else {
-        if (submitButtonRef.current) {
-            submitButtonRef.current.disabled = true;
-        }
-    }
 
-    const handleEmailBlur = () => {
-        if (email.length > 20) {
-            setIsVaildEmail(false);
-            setErrorEmailMessage("Превышена максимальная длина почты");
+    const onBlurEmail = () => {
+        if (email.length === 0) {
+            setEmailErrorMassage("*Данное поле не может быть пустым");
         } else if (!emailRegex.test(email)) {
-            setIsVaildEmail(false);
-            setErrorEmailMessage("Некорректная почта");
+            setEmailErrorMassage("*Некорректный адрес электронной почты");
         } else {
-            setIsVaildEmail(true);
-            setErrorEmailMessage("");
+            setEmailErrorMassage("");
         }
     };
 
-    const handlePasswordBlur = () => {
-        if (password.length < 5) {
-            setIsVaildPassword(false);
-            setErrorPasswordMessage("Слишком короткий пароль");
+    const onBlurPassword = () => {
+        if (password.length === 0) {
+            setPasswordErrorMassage("*Данное поле не может быть пустым");
+        } else if (password.length <= 5) {
+            setPasswordErrorMassage(
+                "*Длина пароля должна быть больше или равна 5"
+            );
         } else {
-            setIsVaildPassword(true);
-            setErrorPasswordMessage("");
+            setPasswordErrorMassage("");
         }
     };
-    const handlePasswordsMatch = () => {
-        if (password !== passwordRepeat) {
-            setPasswordsMatch(false);
-        } else {
-            setPasswordsMatch(true);
-        }
+    if (password !== passwordRepeat) {
+        passwordRepeatErrorMassage = "*Пароли не совпадают";
+    }
+    if (
+        emailErrorMassage === "" &&
+        passwordErrorMassage === "" &&
+        passwordRepeatErrorMassage === "" &&
+        email !== "" &&
+        password !== "" &&
+        passwordRepeat !== "" &&
+        submitButtonRef.current
+    ) {
+        submitButtonRef.current.focus();
+        submitButtonRef.current.disabled = false;
+    } else if (submitButtonRef.current) {
+        submitButtonRef.current.disabled = true;
+    }
+
+    const deletEmail = (event) => {
+        event.preventDefault();
+        setEmail("");
+    };
+    const deletPassword = (event) => {
+        event.preventDefault();
+        setPassword("");
+    };
+    const deletPasswordRepeat = (event) => {
+        event.preventDefault();
+        setPasswordRepeat("");
     };
 
     return (
@@ -87,20 +78,19 @@ export const LoginPage = () => {
             password={password}
             setEmail={setEmail}
             setPassword={setPassword}
-            sendData={sendData}
-            isVaildEmail={isVaildEmail}
+            emailErrorMassage={emailErrorMassage}
+            emailOnBlur={onBlurEmail}
+            emailRegex={emailRegex}
+            passwordErrorMassage={passwordErrorMassage}
             setPasswordRepeat={setPasswordRepeat}
+            passwordOnBlur={onBlurPassword}
             passwordRepeat={passwordRepeat}
-            isVaildPassword={isVaildPassword}
-            passwordsMatch={passwordsMatch}
-            handleEmailBlur={handleEmailBlur}
-            handlePasswordBlur={handlePasswordBlur}
-            errorEmailMessage={errorEmailMessage}
-            errorPasswordMessage={errorPasswordMessage}
+            passwordRepeatErrorMassage={passwordRepeatErrorMassage}
+            sendData={sendData}
             submitButtonRef={submitButtonRef}
-            allIsVaild={allIsVaild}
-            allFieldsAreFilledIn={allFieldsAreFilledIn}
-            handlePasswordsMatch={handlePasswordsMatch}
+            deletEmail={deletEmail}
+            deletPassword={deletPassword}
+            deletPasswordRepeat={deletPasswordRepeat}
         />
     );
 };
