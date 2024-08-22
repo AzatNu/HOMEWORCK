@@ -1,0 +1,241 @@
+.LoginPage {
+    width: 800px;
+    height: 900px;
+    background-color: rgb(110, 133, 133);
+    border-radius: 10px;
+    box-shadow: 20px 5px 10px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.title {
+    width: 100%;
+    height: 30px;
+    text-align: center;
+    color: rgb(228, 228, 228);
+    justify-content: space-around;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.title h1 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    text-align: center;
+    margin: 0px;
+}
+.email-form {
+    border-radius: 5px;
+    margin-top: 20px;
+    width: 700px;
+    height: 400px;
+    background: rgb(42, 103, 153);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.email-form:hover {
+    box-shadow: 10px 5px 10px rgba(0, 0, 0, 0.5);
+    transition: box-shadow 0.3s ease-in-out;
+    animation: grow 0.3s ease-in-out forwards;
+}
+
+@keyframes grow {
+    0% {
+        width: 90%;
+        height: 400px;
+    }
+    100% {
+        width: 100%;
+        height: 450px;
+    }
+}
+.email-form input {
+    width: 400px;
+    height: 30px;
+    border-radius: 15px;
+    border: 2px solid rgb(228, 228, 228);
+    font-size: 20px;
+    justify-content: start;
+    margin-top: 10px;
+    background: rgba(96, 96, 102, 0.308);
+}
+
+.email-form input:focus {
+    outline: none;
+    animation: border-radius 0.6s ease-in-out forwards,
+        background-color 0.6s ease-in-out forwards;
+    transition: box-shadow 0.3s ease-in-out;
+    box-shadow: 10px 5px 10px rgba(0, 0, 0, 0.5);
+}
+
+@keyframes background-color {
+    0% {
+        background: rgba(96, 96, 102, 0.308);
+    }
+    100% {
+        background: rgb(248, 248, 248);
+    }
+}
+
+@keyframes border-radius {
+    0% {
+        border-radius: 15px;
+    }
+    100% {
+        border-radius: 5px;
+    }
+}
+.email-form label {
+    color: rgb(228, 228, 228);
+    font-size: 20px;
+    justify-content: start;
+}
+
+.password-form {
+    border-radius: 10px;
+    margin-top: 20px;
+    width: 700px;
+    height: 400px;
+    background: rgb(42, 103, 153);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.password-form:hover {
+    box-shadow: 10px 5px 10px rgba(0, 0, 0, 0.5);
+    transition: box-shadow 0.3s ease-in-out;
+    animation: grow 0.3s ease-in-out forwards;
+}
+.password-form input {
+    width: 400px;
+    height: 30px;
+    border-radius: 15px;
+    border: 2px solid rgb(228, 228, 228);
+    font-size: 20px;
+    justify-content: start;
+    background: rgba(96, 96, 102, 0.308);
+    margin-top: 10px;
+}
+
+.password-form label {
+    color: rgb(228, 228, 228);
+    font-size: 20px;
+    justify-content: start;
+}
+
+.password-form input:focus {
+    outline: none;
+    animation: border-radius 0.6s ease-in-out forwards,
+        background-color 0.6s ease-in-out forwards;
+    transition: box-shadow 0.3s ease-in-out;
+    box-shadow: 10px 5px 10px rgba(0, 0, 0, 0.5);
+}
+.passwordRepeat-form {
+    border-radius: 10px;
+    margin-top: 20px;
+    width: 700px;
+    height: 400px;
+    background: rgb(42, 103, 153);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.passwordRepeat-form:hover {
+    box-shadow: 10px 5px 10px rgba(0, 0, 0, 0.5);
+    transition: box-shadow 0.3s ease-in-out;
+    animation: grow 0.2s ease-in-out forwards;
+}
+.passwordRepeat-form input {
+    width: 400px;
+    height: 30px;
+    border-radius: 15px;
+    border: 2px solid rgb(228, 228, 228);
+    font-size: 20px;
+    justify-content: start;
+    margin-top: 10px;
+    background: rgba(96, 96, 102, 0.308);
+}
+.passwordRepeat-form label {
+    color: rgb(228, 228, 228);
+    font-size: 20px;
+    justify-content: start;
+    margin: 10px;
+}
+.passwordRepeat-form input:focus {
+    outline: none;
+    animation: border-radius 0.6s ease-in-out forwards,
+        background-color 0.6s ease-in-out forwards;
+    transition: box-shadow 0.3s ease-in-out;
+    box-shadow: 10px 5px 10px rgba(0, 0, 0, 0.5);
+}
+.form {
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+.submitButton {
+    margin-top: 30px;
+    width: 250px;
+    height: 50px;
+    border-radius: 30px;
+    background: rgb(112, 118, 122);
+    color: rgb(228, 228, 228);
+    border: none;
+    font-size: 20px;
+}
+.submitButton:focus {
+    background: rgb(24, 170, 11);
+    color: rgb(42, 103, 153);
+    animation: grow 1s forwards;
+    outline: none;
+}
+
+.submitButton:focus:hover {
+    background: rgb(42, 103, 153);
+    color: rgb(228, 228, 228);
+    animation: grow 1s forwards;
+    box-shadow: 10px 5px 10px rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+}
+
+@keyframes grow {
+    from {
+        transform: scale(1);
+    }
+    to {
+        transform: scale(1.1);
+        box-shadow: 10px 5px 10px rgba(0, 0, 0, 0.5);
+    }
+}
+.cleanButton {
+    margin-top: 30px;
+    width: 100px;
+    height: 40px;
+    border-radius: 30px;
+    background: rgb(42, 103, 153);
+    color: rgb(228, 228, 228);
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+.cleanButton:hover {
+    background: rgb(228, 228, 228);
+    color: rgb(42, 103, 153);
+    animation: grow 0.5s forwards;
+}
+
+.error {
+    margin: 0;
+    font-size: 20px;
+    color: rgb(185, 6, 6);
+}
