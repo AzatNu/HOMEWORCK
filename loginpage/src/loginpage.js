@@ -1,5 +1,4 @@
 import styel from "./login.module.css";
-import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useRef, useEffect } from "react";
 import { useForm } from "react-hook-form";
@@ -10,7 +9,7 @@ export const LoginPage = () => {
     const {
         register,
         handleSubmit,
-        formState: { errors },
+        formState: { errors, isValid },
     } = useForm({
         defaultValues: {
             email: "",
@@ -20,25 +19,22 @@ export const LoginPage = () => {
         resolver: yupResolver(FeildSchema),
     });
 
-    const onSubmit = (data) => {
-        console.log(data);
-    };
-    if (submitButtonRef.current) {
-        if (
-            errors.email === undefined &&
-            errors.password === undefined &&
-            errors.passwordRepeat === undefined
-        ) {
+    useEffect(() => {
+        if (isValid) {
             submitButtonRef.current.focus();
         }
-    }
+    }, [isValid]);
+
+    const onSubmit = (DATA) => {
+        console.log(DATA);
+    };
 
     return (
-        <div className={styel["LoginPage"]} onSubmit={handleSubmit(onSubmit)}>
+        <div className={styel["LoginPage"]}>
             <div className={styel["title"]}>
                 <h1>Форма для регистрации</h1>
             </div>
-            <form className={styel["form"]}>
+            <form className={styel["form"]} onSubmit={handleSubmit(onSubmit)}>
                 <div className={styel["email-form"]}>
                     <label htmlFor="Email">Электронная почта</label>
                     <input
@@ -48,7 +44,6 @@ export const LoginPage = () => {
                         {...register("email")}
                     />
                     <p className={styel["error"]}>{errors.email?.message}</p>
-                    <button className={styel["cleanButton"]}>Очистить</button>
                 </div>
                 <div className={styel["password-form"]}>
                     <label htmlFor="Password">Пароль</label>
@@ -59,7 +54,6 @@ export const LoginPage = () => {
                         {...register("password")}
                     />
                     <p className={styel["error"]}>{errors.password?.message}</p>
-                    <button className={styel["cleanButton"]}>Очистить</button>
                 </div>
                 <div className={styel["passwordRepeat-form"]}>
                     <label htmlFor="Password">Повторите пароль</label>
@@ -72,16 +66,15 @@ export const LoginPage = () => {
                     <p className={styel["error"]}>
                         {errors.passwordRepeat?.message}
                     </p>
-                    <button className={styel["cleanButton"]}>Очистить</button>
                 </div>
+                <button
+                    type="submit"
+                    ref={submitButtonRef}
+                    className={styel["submitButton"]}
+                >
+                    Зарегистрироваться
+                </button>
             </form>
-            <button
-                ref={submitButtonRef}
-                className={styel["submitButton"]}
-                onClick={handleSubmit(onSubmit)}
-            >
-                Зарегистрироваться
-            </button>
         </div>
     );
 };

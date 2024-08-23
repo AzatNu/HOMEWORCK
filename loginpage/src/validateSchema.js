@@ -1,16 +1,11 @@
-import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
 export const FeildSchema = yup.object().shape({
     email: yup
         .string()
         .required("*Это поле обязательно для заполнения")
-        .max(20, "*Максимальная длина 20 символов")
-        .min(3, "*Минимальная длина 3 символа")
-        .matches(
-            /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-            "*Только латинские буквы и цифры"
-        ),
+        .max(25, "*Максимальная длина 30 символов")
+        .email("Это поле должно содержать почту в формате: 2LW9w@example.com"),
     password: yup
         .string()
         .required("*Это поле обязательно для заполнения")
@@ -18,7 +13,5 @@ export const FeildSchema = yup.object().shape({
     passwordRepeat: yup
         .string()
         .required("*Это поле обязательно для заполнения")
-        .test("*password-match", "Пароли не совпадают", function (value) {
-            return this.parent.password === value;
-        }),
+        .oneOf([yup.ref("password"), null], "Пароли не совпадают"),
 });
